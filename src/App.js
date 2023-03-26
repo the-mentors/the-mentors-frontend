@@ -1,24 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from "styled-components";
+import { theme } from "./public/shared/theme";
+import variables from './public/shared/variables';
+import GlobalStyle from './public/shared/GlobalStyle';
+import Router from "./Router";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={{ style: theme, variables} }>
+      <GlobalStyle />
+      <Router />
+    </ThemeProvider>
   );
 }
 
