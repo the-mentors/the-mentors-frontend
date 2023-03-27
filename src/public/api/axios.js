@@ -19,3 +19,7 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+
+
+export const loadProfile = async () => await instance.get("/api/v1/users");

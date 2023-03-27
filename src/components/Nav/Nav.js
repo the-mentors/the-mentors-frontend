@@ -10,6 +10,7 @@ import {
 } from 'react-icons/bs';
 import { getToken, removeToken } from '../../public/shared/localStorage';
 import mentors from "../../public/images/mentors.png";
+import {CATEGORIES} from '../Category/CATEGORY';
 
 
 const Nav = () => {
@@ -20,6 +21,7 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isUserOpen, setIsUserOpen] = useState(false);
   const token = getToken();
+
 
   const handleDropdown = e => {
     e.stopPropagation();
@@ -84,7 +86,7 @@ const Nav = () => {
       <NavTop>
         <GridWrap>
           <GridSubWrap>
-            {token ?
+            {!token ?
               (<BsList className="icon" onMouseDown={handleDropdown} />) :
               (<div></div>)
             }
@@ -129,13 +131,14 @@ const Nav = () => {
           </MenuIconWrap>
         </GridWrap>
       </NavTop>
+      
       <DropdownMenu ref={dropdownRef} className={isOpen ? 'active' : ''}>
         <GridWrap>
-          {menuLists.map(({ url, title, image, id }) => (
-            <li key={id}>
-              <Link to={`/category/${url}`}>
-                <img src={image} alt={title} />
-                <p>{title}</p>
+          {CATEGORIES.map(({ code, name }) => (
+            <li key={code}>
+              <Link to={`/category/${name}`}>
+                <img src="https://avatars.githubusercontent.com/u/106054507?s=400&u=e2d2e7d673cbb4e1269be8ad52e6fc05058adcd8&v=4" alt={name} />
+                <p>{name}</p>
               </Link>
             </li>
           ))}
