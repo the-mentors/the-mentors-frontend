@@ -9,6 +9,7 @@ import Button from '../elements/Button';
 import Input from '../elements/Input';
 import Text from '../elements/Text';
 import Grid from '../elements/Grid';
+import { getToken } from "../public/shared/localStorage";
 
 
 const SignIn = () => {
@@ -16,18 +17,28 @@ const SignIn = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const loginButtonClick = () => {
+  const loginRequest = () => {
     instance.post(`api/v1/singin`, {
       email: email, password: password
     }).then((res) => {
-      localStorage.setItem(ACCESS_TOKEN ,res.data.ACCESS_TOKEN);
-      localStorage.setItem(REFRESH_TOKEN ,res.data.REFRESH_TOKEN);
-      navigate("/");
-    })
-    .catch((err) => {
+      localStorage.setItem(ACCESS_TOKEN, res.data.ACCESS_TOKEN);
+      localStorage.setItem(REFRESH_TOKEN, res.data.REFRESH_TOKEN);
+    }).catch((err) => {
       alert("로그인 실패");
       navigate("/signin");
     });
+  }
+
+  const profileRequest = () => {
+    if (getToken()) {
+      instance.get(`api/v1/users`)
+        .then((res) => {
+          //저장하는 코드
+          navigate("/");
+        })
+    }
+    alert("로그인 실패");
+    navigate("/signin");
   }
 
   // 경고창 없애는 함수
@@ -119,7 +130,8 @@ const SignIn = () => {
       return;
     }
 
-    loginButtonClick();
+    loginRequest();
+    profileRequest();
   };
 
   return (
