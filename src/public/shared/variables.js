@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 
+
 const variables = {
   flex: (direction = 'row', justify = 'center', align = 'center') => `
     display: flex;
@@ -32,6 +33,19 @@ const variables = {
     top: 50%;
     transform: translateY(-50%);
   `,
+
+  customFlex : (justify = "center", align = "center", direction = "row") => `
+    display: flex;
+    justify-content: ${justify};
+    align-items: ${align};
+    flex-direction: ${direction};
+  `,
+  lightFontWeight: `
+  font-weight: 100;`,
+  regularFontWeight: `
+  font-weight: 400`,
+  boldFontWeight: `
+  font-weight: 700`,
 };
 
 export default variables;

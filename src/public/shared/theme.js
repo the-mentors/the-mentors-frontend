@@ -19,4 +19,6 @@ export const theme = {
   fontTitle: "'Alata', sans-serif;",
   fontContent: "'Noto Sans KR', sans-serif;",
   fontLogo: "'Exo 2', sans-serif",
+
+  brandColor: "#F7323F",
 };

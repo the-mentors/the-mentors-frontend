@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken } from '../public/shared/localStorage';
+import MentoringTemplete from "../components/Card/MentoringTemplete";
 
 
 function Main () {
@@ -14,7 +15,9 @@ function Main () {
   }, [navigate]);
 
   return (
-    <div></div>
+    <div>
+      <MentoringTemplete />
+    </div>
   );
 }
 

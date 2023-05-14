@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 import {
   BsList,
   BsBell,
@@ -10,57 +9,28 @@ import {
 } from 'react-icons/bs';
 import { getToken, removeToken } from '../../public/shared/localStorage';
 import mentors from "../../public/images/mentors.png";
-
+import CategoryBox from '../Category/CategoryBox';
 
 const Nav = () => {
-  const dropdownRef = useRef(null);
   let menuRef = useRef();
   const [search, setSearch] = useState('');
   const [menuLists, setMenuLists] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
   const [isUserOpen, setIsUserOpen] = useState(false);
-  const token = getToken();
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [categoryAnimation, setCategoryAnimation] = useState(true);
 
-  const handleDropdown = e => {
-    e.stopPropagation();
-    if (isOpen === true) {
-      setIsOpen(false);
-    } else {
-      setIsOpen(true);
-    }
+
+  const openCategory = () => {
+    setIsCategoryOpen(!isCategoryOpen);
   };
 
-  useEffect(() => {
-    const pageClickEvent = e => {
-      if (
-        dropdownRef.current !== null &&
-        !dropdownRef.current.contains(e.target)
-      ) {
-        setIsOpen(!isOpen);
-      }
-    };
-    if (isOpen) {
-      window.addEventListener('mousedown', pageClickEvent);
-    }
-
-    return () => {
-      window.removeEventListener('mousedown', pageClickEvent);
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
-        setIsOpen(false);
-        console.log(menuRef.current);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    }
-
-  });
+  const closeCategory = () => {
+    setCategoryAnimation(false);
+    setTimeout(() => {
+      setIsCategoryOpen(false);
+      setCategoryAnimation(true);
+    }, 100);
+  };
 
   const onChange = event => {
     event.preventDefault();
@@ -68,7 +38,7 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (getToken()) {
       fetch('/categories', {
         method: 'GET',
       })
@@ -84,8 +54,8 @@ const Nav = () => {
       <NavTop>
         <GridWrap>
           <GridSubWrap>
-            {token ?
-              (<BsList className="icon" onMouseDown={handleDropdown} />) :
+            {getToken() ?
+              (<BsList className="icon" onMouseDown={openCategory} />) :
               (<div></div>)
             }
             <Logo>
@@ -106,52 +76,57 @@ const Nav = () => {
               <Link to="/signin">멘토링 개설</Link>
             </button>
             <Link to="/signin">
-              <BsBell className="icon" alt="alarm"/>
+              <BsBell className="icon" alt="alarm" />
             </Link>
 
             <div className='menu-container' ref={menuRef}>
               <div className='menu-trigger' onClick={() => { setIsUserOpen(!isUserOpen) }}>
-                <BsPerson className="icon" alt="prifile"/>
+                <BsPerson className="icon" alt="prifile" />
               </div>
               <div className={`dropdown-menu ${isUserOpen ? 'active' : 'inactive'}`} >
 
-                {token ? (
+                {getToken() ? (
                   <ul>
                     <img src="https://avatars.githubusercontent.com/u/106054507?s=400&u=e2d2e7d673cbb4e1269be8ad52e6fc05058adcd8&v=4" alt='프로필사진' />
-                    <DropdownItem text={"프로필 수정"} link={"/signin"} />
-                    <DropdownItem text={"로그아웃"} onClick={ removeToken() } />
+                    <DropdownItem text={"프로필 수정"} isRemove ={false} link={"/main"} />
+                    <DropdownItem text={"로그아웃"} isRemove ={true} link={"/signin"} removeToken={removeToken} />
                   </ul>
                 ) :
-                  (<DropdownItem text={"로그인"} link={"/signin"} />
+                  (<DropdownItem text={"로그인"} isRemove ={false} link={"/signin"} />
                   )}
               </div>
             </div>
           </MenuIconWrap>
         </GridWrap>
       </NavTop>
-      <DropdownMenu ref={dropdownRef} className={isOpen ? 'active' : ''}>
-        <GridWrap>
-          {menuLists.map(({ url, title, image, id }) => (
-            <li key={id}>
-              <Link to={`/category/${url}`}>
-                <img src={image} alt={title} />
-                <p>{title}</p>
-              </Link>
-            </li>
-          ))}
-        </GridWrap>
-      </DropdownMenu>
+
+      <HeaderContainer>
+        {isCategoryOpen && (
+          <CategoryBox
+            closeCategory={closeCategory}
+            categoryAnimation={categoryAnimation}
+          />
+        )}
+      </HeaderContainer>
     </NavContainer>
   );
 };
 
 function DropdownItem(props) {
+  function handlerClickEvent(e){
+    if(props.isRemove){
+      props.removeToken();
+    }
+  }
+
   return (
-    <li className='dropdownItem'>
+    <li className='dropdownItem' onClick={handlerClickEvent}>
       <Link to={props.link}>{props.text}</Link>
     </li>
   );
 }
+
+
 
 const NavContainer = styled.div`
   width: 100%;
@@ -173,6 +148,16 @@ const GridWrap = styled.div`
   margin: 0 auto;
   padding: 0 30px;
 `;
+
+const HeaderContainer = styled.div`
+    display: flex;
+    width: 720px;
+    top: 0;
+    left: 0;
+    margin-top: 70px;
+    margin-left: 300px;
+`;
+
 
 const GridSubWrap = styled.div`
   padding: 0 30px;
@@ -371,60 +356,6 @@ const MenuIconWrap = styled.div`
     max-width: 100px;
     margin-left: 10px;
     transition: var(--speed);
-  }
-`;
-
-
-const DropdownMenu = styled.ul`
-  display: flex;
-  position: absolute;
-  width: 100%;
-  height: 200px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-20px);
-  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
-  background-color: #fff;
-  border-bottom: 1px solid ${({ theme }) => theme.style.middleGrey};
-
-  &.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  div {
-    gap: 30px;
-    justify-content: flex-start;
-  }
-  li {
-    width: 200px;
-    overflow: hidden;
-    border-radius: 10px;
-  }
-  a {
-    position: relative;
-    display: block;
-
-    background-color: #000;
-    &:hover img {
-      opacity: 0.5;
-    }
-
-    img {
-      width: 100%;
-      display: block;
-      object-fit: contain;
-      transition: all 0.2s ease-in-out;
-    }
-
-    p {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #fff;
-    }
   }
 `;
 
