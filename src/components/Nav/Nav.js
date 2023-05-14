@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import variables from "../../public/shared/variables";
 import {
   BsList,
   BsBell,
@@ -13,15 +12,12 @@ import mentors from "../../public/images/mentors.png";
 import CategoryBox from '../Category/CategoryBox';
 
 const Nav = () => {
-  const dropdownRef = useRef(null);
   let menuRef = useRef();
   const [search, setSearch] = useState('');
   const [menuLists, setMenuLists] = useState([]);
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [categoryAnimation, setCategoryAnimation] = useState(true);
-
-  const token = getToken();
 
 
   const openCategory = () => {
@@ -42,7 +38,7 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (getToken()) {
       fetch('/categories', {
         method: 'GET',
       })
@@ -58,7 +54,7 @@ const Nav = () => {
       <NavTop>
         <GridWrap>
           <GridSubWrap>
-            {!token ?
+            {!getToken() ?
               (<BsList className="icon" onMouseDown={openCategory} />) :
               (<div></div>)
             }
@@ -80,23 +76,23 @@ const Nav = () => {
               <Link to="/signin">멘토링 개설</Link>
             </button>
             <Link to="/signin">
-              <BsBell className="icon" alt="alarm"/>
+              <BsBell className="icon" alt="alarm" />
             </Link>
 
             <div className='menu-container' ref={menuRef}>
               <div className='menu-trigger' onClick={() => { setIsUserOpen(!isUserOpen) }}>
-                <BsPerson className="icon" alt="prifile"/>
+                <BsPerson className="icon" alt="prifile" />
               </div>
               <div className={`dropdown-menu ${isUserOpen ? 'active' : 'inactive'}`} >
 
-                {token ? (
+                {getToken() ? (
                   <ul>
                     <img src="https://avatars.githubusercontent.com/u/106054507?s=400&u=e2d2e7d673cbb4e1269be8ad52e6fc05058adcd8&v=4" alt='프로필사진' />
-                    <DropdownItem text={"프로필 수정"} link={"/signin"} />
-                    <DropdownItem text={"로그아웃"} onClick={ removeToken() } />
+                    <DropdownItem text={"프로필 수정"} isRemove ={false} link={"/main"} />
+                    <DropdownItem text={"로그아웃"} isRemove ={true} link={"/signin"} removeToken={removeToken} />
                   </ul>
                 ) :
-                  (<DropdownItem text={"로그인"} link={"/signin"} />
+                  (<DropdownItem text={"로그인"} isRemove ={false} link={"/signin"} />
                   )}
               </div>
             </div>
@@ -106,19 +102,25 @@ const Nav = () => {
 
       <HeaderContainer>
         {isCategoryOpen && (
-              <CategoryBox
-                closeCategory={closeCategory}
-                categoryAnimation={categoryAnimation}
-              />
-            )}
+          <CategoryBox
+            closeCategory={closeCategory}
+            categoryAnimation={categoryAnimation}
+          />
+        )}
       </HeaderContainer>
     </NavContainer>
   );
 };
 
 function DropdownItem(props) {
+  function handlerClickEvent(e){
+    if(props.isRemove){
+      props.removeToken();
+    }
+  }
+
   return (
-    <li className='dropdownItem'>
+    <li className='dropdownItem' onClick={handlerClickEvent}>
       <Link to={props.link}>{props.text}</Link>
     </li>
   );

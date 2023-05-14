@@ -84,7 +84,7 @@ const S = {
     ${variables.customFlex()}
     position: absolute;
     top: 60px;
-    left: 60px;
+    left: 120px;
     width: 300px;
     height: 555px;
     background-color: white;

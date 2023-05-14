@@ -9,7 +9,6 @@ import Button from '../elements/Button';
 import Input from '../elements/Input';
 import Text from '../elements/Text';
 import Grid from '../elements/Grid';
-import { getToken } from "../public/shared/localStorage";
 
 
 const SignIn = () => {
@@ -18,27 +17,16 @@ const SignIn = () => {
   const [password, setPassword] = useState();
 
   const loginRequest = () => {
-    instance.post(`api/v1/singin`, {
+    instance.post(`/api/v1/users/signin`, {
       email: email, password: password
     }).then((res) => {
-      localStorage.setItem(ACCESS_TOKEN, res.data.ACCESS_TOKEN);
-      localStorage.setItem(REFRESH_TOKEN, res.data.REFRESH_TOKEN);
+      console.log(res.data.body.accessToken);
+      localStorage.setItem(ACCESS_TOKEN, res.data.body.accessToken);
+      localStorage.setItem(REFRESH_TOKEN, res.data.body.accessToken);
+      navigate("/main");
     }).catch((err) => {
-      alert("로그인 실패");
-      navigate("/signin");
+      alert("로그인 실패")
     });
-  }
-
-  const profileRequest = () => {
-    if (getToken()) {
-      instance.get(`api/v1/users`)
-        .then((res) => {
-          //저장하는 코드
-          navigate("/");
-        })
-    }
-    alert("로그인 실패");
-    navigate("/signin");
   }
 
   // 경고창 없애는 함수
@@ -131,7 +119,6 @@ const SignIn = () => {
     }
 
     loginRequest();
-    profileRequest();
   };
 
   return (
@@ -202,26 +189,6 @@ const Container = styled.div`
     .socialBox {
       margin: 70px 0 0;
     }
-  }
-`;
-
-
-const Line = styled.div`
-  width: 100%;
-  height: 1px;
-  margin: 12px 0;
-  background-color: rgb(230, 230, 230);
-  ${(props) => (props.margin ? `margin: ${props.margin}` : '')}
-`;
-
-const CircleBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  gap: 20px;
-  @media (max-width: 1080px) {
-    width: 100%;
   }
 `;
 
