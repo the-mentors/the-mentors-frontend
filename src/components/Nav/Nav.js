@@ -54,7 +54,7 @@ const Nav = () => {
       <NavTop>
         <GridWrap>
           <GridSubWrap>
-            {!getToken() ?
+            {getToken() ?
               (<BsList className="icon" onMouseDown={openCategory} />) :
               (<div></div>)
             }
