@@ -88,7 +88,7 @@ const Nav = () => {
                 {getToken() ? (
                   <ul>
                     <img src="https://avatars.githubusercontent.com/u/106054507?s=400&u=e2d2e7d673cbb4e1269be8ad52e6fc05058adcd8&v=4" alt='프로필사진' />
-                    <DropdownItem text={"프로필 수정"} isRemove ={false} link={"/main"} />
+                    <DropdownItem text={"마이페이지"} isRemove ={false} link={"/main"} />
                     <DropdownItem text={"로그아웃"} isRemove ={true} link={"/signin"} removeToken={removeToken} />
                   </ul>
                 ) :
@@ -130,7 +130,6 @@ function DropdownItem(props) {
 
 const NavContainer = styled.div`
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.style.lightGrey};
   position: fixed;
   top: 0;
   left: 0;

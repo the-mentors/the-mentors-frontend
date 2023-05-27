@@ -23,7 +23,7 @@ const SignIn = () => {
       console.log(res.data.body.accessToken);
       localStorage.setItem(ACCESS_TOKEN, res.data.body.accessToken);
       localStorage.setItem(REFRESH_TOKEN, res.data.body.accessToken);
-      navigate("/main");
+      navigate("/");
     }).catch((err) => {
       alert("로그인 실패")
     });
@@ -98,7 +98,7 @@ const SignIn = () => {
       return;
     }
 
-    if (password.length < 6) {
+    if (password.length < 4) {
       const warningPw = document.getElementById('WarningPw');
       warningPw.style.display = 'block';
 
@@ -149,7 +149,7 @@ const SignIn = () => {
             }}
           />
           <Waring id="pleasePW">비밀번호를 입력해주세요.</Waring>
-          <Waring id="WarningPw">비밀번호는 6자 이상이어야 합니다.</Waring>
+          <Waring id="WarningPw">비밀번호는 4자 이상이어야 합니다.</Waring>
           <Button margin="40px 0 0" text="로그인" _onClick={onClick} />
         </Grid>
 

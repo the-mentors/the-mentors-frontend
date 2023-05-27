@@ -83,7 +83,7 @@ const SignUp = () => {
         <Input _id="passwordInput" label="패스워드" type="password" placeholder="패스워드를 입력해주세요" is_user value={password} _onChange={(e) => { onChangePassword(e); }} />
         <Input _id="nicknameInput" label="닉네임" placeholder="닉네임을 입력해주세요" is_user value={nickname} _onChange={(e) => { onChangeNickName(e); }} />
         <Input _id="usernameInput" label="이름" placeholder="이름을 입력해주세요" is_user value={username} _onChange={(e) => { onChangeUsername(e); }} />
-        <Button margin="40px 0 0" text="로그인" _onClick={handleClickSignupEvent} />
+        <Button margin="40px 0 0" text="회원가입" _onClick={handleClickSignupEvent} />
       </Box>
     </Container>
   );

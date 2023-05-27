@@ -2,7 +2,7 @@ import styled from "styled-components"
 import baseImage from "../../public/images/baseProfile.png"
 
 function MentoringCard(props) {
-  const {id, title, content, thumbnail, price, profileUrl, nickname} = props;
+  const {id, title, thumbnail, price, profileUrl, nickname} = props;
   var tempPrice = 10000;
 
   return (
@@ -11,10 +11,10 @@ function MentoringCard(props) {
         <Image src={thumbnail ? thumbnail : baseImage} alt="썸네일" />
       </CardImage>
       <CardContent>
-        <Title>김영한 기술이사의 </Title>
+        <Title>{title} </Title>
         <SubDiv>
             <Star>⭐ 4.8</Star>
-            <Price>\{price? price : tempPrice.toLocaleString()}</Price>
+            <Price>\{price? price.toLocaleString() : tempPrice.toLocaleString()}</Price>
         </SubDiv>
       </CardContent>
       <UserInfo>
@@ -34,7 +34,13 @@ const Card = styled.div`
     width: 200px;
     height: 250px;
     border: 1px solid lightgray;
-    margin: 7px;
+    margin-bottom: 10px;
+    margin-left: 3px;
+
+    &:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+  }
 `;
 
 
