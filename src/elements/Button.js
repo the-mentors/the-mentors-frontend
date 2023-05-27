@@ -70,33 +70,6 @@ const ElButton = styled.button`
     ${(props) => props.flex_center? `display: flex; align-items: center; justify-content:center`: ""};
     cursor: pointer;
     ${(props) => (props.weight ? `font-weight: ${props.weight};` : '')};
-    // 상세 후원하기 버튼 hover
-    ${(props) => (props.donateHover ?
-      `:hover {
-          background-color: rgb(255, 69, 67);
-          color: rgb(255, 255, 255);
-          transition: opacity 0.1s ease 0s, background-color 0.1s ease 0s, color 0.1s ease 0s, box-shadow 0.1s ease 0s, background 0.1s ease 0s;
-        }` : '')};
-    // 상세 후원취소하기 버튼 hover
-    ${(props) => (props.CancelHover ?
-      `:hover {
-          background-color: rgb(217, 217, 217);
-          color: rgb(0, 0, 0);
-          transition: opacity 0.1s ease 0s, background-color 0.1s ease 0s, color 0.1s ease 0s, box-shadow 0.1s ease 0s, background 0.1s ease 0s;
-        }` : '')};
-    // 상세 팔로우하기 버튼 hover
-    ${(props) => (props.FollowHover ?
-      `:hover {
-          background-color: rgba(240, 240, 240, 0.7);
-          color: rgb(61, 61, 61);
-        }` : '')};
-    // 상세 문의하기 버튼 hover
-    ${(props) => (props.AskHover ?
-      `:hover {
-          color: rgb(61, 61, 61);
-          border: 1px solid rgb(158, 158, 158);
-          transition: all 0.3s ease-in-out 0s;
-        }` : '')};
 `
 
 export default Button;

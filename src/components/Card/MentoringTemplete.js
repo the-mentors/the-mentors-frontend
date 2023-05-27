@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import MentoringCard from './MentoringCard';
 import { instance } from '../../public/api/axios';
 import Pagination from './Pagination';
+import MentoringModal from '../modal/MentoringModal';
 
 function MentoringTemplete() {
   const [mentorings, setMentoring] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [mentoringSelected, setMentoringSelected] = useState({});
+
   const [size, setSize] = useState(12);
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState();
@@ -15,8 +19,8 @@ function MentoringTemplete() {
     onHandlerGetContents(page);
   }, []);
 
-  function onHandlerGetContents(page){
-    instance.get(`/api/v1/mentoring?page=${page}&size=${size}`)
+  async function onHandlerGetContents(page){
+    await instance.get(`/api/v1/mentoring?page=${page}&size=${size}`)
       .then((res) => {
         onChangeContents(res.data.content, res.data.totalPages)
       })
@@ -27,6 +31,15 @@ function MentoringTemplete() {
     setMentoring(contents)
     setTotalPage(totalPages)
   }
+
+  function handleContentClick(id) {
+    instance.get(`/api/v1/mentoring/${id}`)
+    .then((res) => {
+      console.log(res.data);
+      setModalOpen(true);
+      setMentoringSelected(res.data);
+    })
+};
 
   return (
     <Container>
@@ -44,6 +57,7 @@ function MentoringTemplete() {
             price={value.price}
             nickname={value.userResponse.nickname}
             profileUrl={value.userResponse.profileUrl}
+            handleContentClick={handleContentClick}
           />
         ))}
       </Template>
@@ -53,6 +67,22 @@ function MentoringTemplete() {
         setPage={setPage}
         onHandlerGetContents = {onHandlerGetContents}
       />
+
+      
+      {modalOpen && (
+                <MentoringModal 
+                id = {mentoringSelected.id}
+                title={mentoringSelected.title}
+                hashTags={mentoringSelected.hashTags.hashTags}
+                isOwner={mentoringSelected.isOwner}
+                price={mentoringSelected.price}
+                thumbnail={mentoringSelected.thumbnail}
+                content={mentoringSelected.content}
+                username={mentoringSelected.userResponse.username}
+                nickname={mentoringSelected.userResponse.nickname}
+                profileUrl={mentoringSelected.userResponse.profileUrl}
+                setModalOpen={setModalOpen} />
+            )}  
     </Container>
   )
 }

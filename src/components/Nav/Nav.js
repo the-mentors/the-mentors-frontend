@@ -84,7 +84,6 @@ const Nav = () => {
                 <BsPerson className="icon" alt="prifile" />
               </div>
               <div className={`dropdown-menu ${isUserOpen ? 'active' : 'inactive'}`} >
-
                 {getToken() ? (
                   <ul>
                     <img src="https://avatars.githubusercontent.com/u/106054507?s=400&u=e2d2e7d673cbb4e1269be8ad52e6fc05058adcd8&v=4" alt='프로필사진' />

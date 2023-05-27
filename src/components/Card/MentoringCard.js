@@ -6,7 +6,7 @@ function MentoringCard(props) {
   var tempPrice = 10000;
 
   return (
-    <Card>
+    <Card onClick={() => props.handleContentClick(id)}>
       <CardImage>
         <Image src={thumbnail ? thumbnail : baseImage} alt="썸네일" />
       </CardImage>
