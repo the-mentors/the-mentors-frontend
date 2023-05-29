@@ -5,6 +5,7 @@ import MainLayout from './pages/MainLayout';
 import Error from './pages/Error';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import Open from './pages/Open';
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
           <Route path="*" element={<Error />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/class/open" element={<Open />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -9,7 +9,6 @@ function MentoringTemplete() {
   const [mentorings, setMentoring] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [mentoringSelected, setMentoringSelected] = useState({});
-
   const [size, setSize] = useState(12);
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState();
@@ -35,7 +34,6 @@ function MentoringTemplete() {
   function handleContentClick(id) {
     instance.get(`/api/v1/mentoring/${id}`)
     .then((res) => {
-      console.log(res.data);
       setModalOpen(true);
       setMentoringSelected(res.data);
     })
@@ -68,7 +66,6 @@ function MentoringTemplete() {
         onHandlerGetContents = {onHandlerGetContents}
       />
 
-      
       {modalOpen && (
                 <MentoringModal 
                 id = {mentoringSelected.id}

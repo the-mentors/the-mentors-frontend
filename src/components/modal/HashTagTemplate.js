@@ -11,7 +11,6 @@ function MentoringTemplete(props) {
                 {hashTags.map((value) => (
                     <HashTag
                         key={value.id}
-                        id={value.id}
                         hashtag={value.name}
                     />
                 ))}
@@ -30,10 +29,9 @@ const Container = styled.div`
 `;
 
 const Template = styled.div`
-    display: grid;
+    display: flex;
     width: 100%;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
 `
 
 export default MentoringTemplete

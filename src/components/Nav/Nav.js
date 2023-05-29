@@ -73,12 +73,8 @@ const Nav = () => {
           </SearchForm>
           <MenuIconWrap>
             <button>
-              <Link to="/signin">멘토링 개설</Link>
+              <Link to="/class/open">멘토링 개설</Link>
             </button>
-            <Link to="/signin">
-              <BsBell className="icon" alt="alarm" />
-            </Link>
-
             <div className='menu-container' ref={menuRef}>
               <div className='menu-trigger' onClick={() => { setIsUserOpen(!isUserOpen) }}>
                 <BsPerson className="icon" alt="prifile" />

@@ -20,6 +20,8 @@ instance.interceptors.request.use(
   }
 );
 
-
+export const imageApi = async (formData) => await instance.post('/api/v1/storage', formData, {
+  headers: {'Content-Type': 'multipart/form-data', charset: 'utf-8'},
+});
 
 export const loadProfile = async () => await instance.get("/api/v1/users");

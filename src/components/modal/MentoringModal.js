@@ -4,6 +4,8 @@ import useOnClickOutside from '../../hooks/useOnClickOutside';
 import styled from 'styled-components';
 import MentoringTemplete from './HashTagTemplate';
 import { instance } from '../../public/api/axios';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/react-editor';
 
 function MentoringModal({
     id,
@@ -23,6 +25,7 @@ function MentoringModal({
     useOnClickOutside(ref, () => { setModalOpen(false) });
 
 
+
     function onClickSubscribeButtonHandler(e){
         instance.post(`/api/v1/mentoring/${id}/subscribe`)
         .then((res) => {
@@ -40,7 +43,7 @@ function MentoringModal({
                     <Close onClick={() => setModalOpen(false)}>X</Close>
                     <MentoringImageBox>
                         <ImageBox
-                            src='https://avatars.githubusercontent.com/u/106054507?v=4'
+                            src={thumbnail}
                             alt='modal__poster-img'
                         />
                     </MentoringImageBox>
@@ -48,19 +51,16 @@ function MentoringModal({
                         <UserInfoBox>
                             <UserInfo>
                                 <UserThumbnail>
-                                    <CircleImage src={'https://avatars.githubusercontent.com/u/106054507?v=4'} />
+                                    <CircleImage src={profileUrl} />
                                 </UserThumbnail>
-                                <UserNickname>{nickname ? nickname : '우진'}</UserNickname>
+                                <UserNickname>{nickname}</UserNickname>
                             </UserInfo>
                             <Title>멘토링 소개 : {title}</Title>
                             <MentoringTemplete hashTags={hashTags}/>
                         </UserInfoBox>
                     </UserInfoContainer>
                     <Content>
-                        <Contents>
-                            <Percent />
-                            {created_date}
-                        </Contents>
+                    <Viewer initialValue={content} />
                     </Content>
 
                     <SubscriberContainer>
@@ -258,16 +258,11 @@ const ImageBox = styled.img`
 
 const Content = styled.div`
     padding: 10px;
-    color: black;
     height: 200px; 
     overflow-y: scroll;
 `;
 
-const Contents = styled.p`
-    font-size: 20px;
-    line-height: 1.5;
-`;
-
-const Percent = styled.span`
-    color: #46d369;
+const MarkDownStyle = styled.div`
+    font-size: 1rem;
+    line-height: 2.5rem;
 `;

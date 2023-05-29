@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { instance } from '../public/api/axios';
+import { imageApi, instance } from '../public/api/axios';
 import baseProfile from "../public/images/baseProfile.png";
 import Input from '../elements/Input';
 import Button from '../elements/Button';
@@ -15,8 +15,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
   const [username, setUsername] = useState('');
-
-
+  const [profileurl, setPofileurl] = useState('');
   const [profile, setProfile] = useState('');
   const imgRef = useRef();
 
@@ -25,10 +24,11 @@ const SignUp = () => {
       alert("모든 정보를 입력해야합니다.");
       return;
     }
+
     instance.post(`/api/v1/users/signup`, {
-      email: email ,
-      password: password ,
-      profileUrl: 'aa',
+      email: email,
+      password: password,
+      profileUrl: profileurl,
       nickname: nickname,
       username: username
     }).then((res) => {
@@ -40,11 +40,22 @@ const SignUp = () => {
 
   const onLoadProfile = (e) => {
     const file = imgRef.current.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setProfile(reader.result);
-    };
+
+    const formData = new FormData();
+    formData.append("files", file);
+
+    imageApi(formData).then((res) => {
+      console.log(res.data);
+      setPofileurl(res.data.responses[0].fileUrl);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setProfile(reader.result);
+      };
+    }).catch((err) => {
+      alert("이미지 업로드 실패");
+    });
+
   }
 
   const onChangeEmail = (e) => {
