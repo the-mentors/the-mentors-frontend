@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 
 function HashTag(props) {
-  const {id, hashtag} = props;
+  const {hashtag} = props;
 
   return (
     <div>

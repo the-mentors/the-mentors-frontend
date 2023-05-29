@@ -261,8 +261,3 @@ const Content = styled.div`
     height: 200px; 
     overflow-y: scroll;
 `;
-
-const MarkDownStyle = styled.div`
-    font-size: 1rem;
-    line-height: 2.5rem;
-`;

@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   BsList,
-  BsBell,
   BsPerson,
   BsSearch,
 } from 'react-icons/bs';
@@ -14,7 +13,6 @@ import CategoryBox from '../Category/CategoryBox';
 const Nav = () => {
   let menuRef = useRef();
   const [search, setSearch] = useState('');
-  const [menuLists, setMenuLists] = useState([]);
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [categoryAnimation, setCategoryAnimation] = useState(true);
@@ -37,17 +35,6 @@ const Nav = () => {
     setSearch(event.target.value);
   };
 
-  useEffect(() => {
-    if (getToken()) {
-      fetch('/categories', {
-        method: 'GET',
-      })
-        .then(res => res.json())
-        .then(data => {
-          setMenuLists(data);
-        });
-    }
-  }, []);
 
   return (
     <NavContainer>
@@ -83,7 +70,7 @@ const Nav = () => {
                 {getToken() ? (
                   <ul>
                     <img src="https://avatars.githubusercontent.com/u/106054507?s=400&u=e2d2e7d673cbb4e1269be8ad52e6fc05058adcd8&v=4" alt='프로필사진' />
-                    <DropdownItem text={"마이페이지"} isRemove ={false} link={"/main"} />
+                    <DropdownItem text={"마이페이지"} isRemove ={false} link={"/mypage/subscribe"} />
                     <DropdownItem text={"로그아웃"} isRemove ={true} link={"/signin"} removeToken={removeToken} />
                   </ul>
                 ) :

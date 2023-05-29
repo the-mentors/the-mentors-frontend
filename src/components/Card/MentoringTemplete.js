@@ -9,10 +9,9 @@ function MentoringTemplete() {
   const [mentorings, setMentoring] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [mentoringSelected, setMentoringSelected] = useState({});
-  const [size, setSize] = useState(12);
+  const [size] = useState(12);
   const [page, setPage] = useState(0);
   const [totalPage, setTotalPage] = useState();
-
 
   useEffect(() => {
     onHandlerGetContents(page);
@@ -43,7 +42,7 @@ function MentoringTemplete() {
     <Container>
       <SubConiner>
           <Title>전체 강의</Title>
-        </SubConiner>
+      </SubConiner>
       <Template>
         {mentorings.map((value) => (
           <MentoringCard
