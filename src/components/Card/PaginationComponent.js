@@ -2,7 +2,7 @@
 import React from 'react'
 import styled from 'styled-components';
 
-function Pagination({ totalPage, page, setPage, onHandlerGetContents}) {
+function PaginationComponent({ totalPage, page, setPage, onHandlerGetContents}) {
     const currentPages = page;
     const numPages = (page + 4 >= totalPage ? totalPage : page + 4);
     return (
@@ -78,4 +78,4 @@ const Button = styled.button`
   }
 `;
 
-export default Pagination
+export default PaginationComponent

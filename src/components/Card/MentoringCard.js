@@ -69,14 +69,20 @@ const CardContent = styled.div`
 `;
 
 const Title = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 180px;
-    height: 30px;
+    width: 90%;
+    display: -webkit-box;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    flex-shrink: 0;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
     background-color: white;
     font-weight: bold;
 `;
+
 
 const SubDiv = styled.div`
     display: flex;

@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { imageApi, instance } from '../public/api/axios';
+import { BASE_IMAGE_URL } from '../public/api/elements';
 import baseProfile from "../public/images/baseProfile.png";
 import Input from '../elements/Input';
 import Button from '../elements/Button';
@@ -15,7 +16,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
   const [username, setUsername] = useState('');
-  const [profileurl, setPofileurl] = useState('');
+  const [profileurl, setPofileurl] = useState(BASE_IMAGE_URL);
   const [profile, setProfile] = useState('');
   const imgRef = useRef();
 

@@ -48,9 +48,9 @@ function MyPageMentor() {
     return (
         <Container>
             <NavContainer>
-                <NavText color='black' onClick={(e) => navigete("/mypage/subscribe")}>{'내 학습'}</NavText>
+                <NavText color='gray' onClick={(e) => navigete("/mypage/subscribe")}>{'내 학습'}</NavText>
                 <NavText color='black'>{'/'}</NavText>
-                <NavText color='gray' onClick={(e) => navigete("/mypage/mentor")}>{'개설한 멘토링'}</NavText>
+                <NavText color='black' onClick={(e) => navigete("/mypage/mentor")}>{'개설한 멘토링'}</NavText>
             </NavContainer>
 
             <Template>
