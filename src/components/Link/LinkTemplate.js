@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import zoom from '../../public/images/zoom.jpg'
+import discord from '../../public/images/discord.png'
 import kakao from '../../public/images/kakao.png'
 import github from '../../public/images/github.png'
 import other from '../../public/images/other.png'
@@ -10,6 +11,8 @@ function LinkTemplate({setLinks}) {
     const [currnetLink, setCurrnentLink] = useState([]);
     const [zoomLink, setZoomLink] = useState('')
     const [zoomOepn, setZoomOpen] = useState(false);
+    const [discordLink, setDiscordLink] = useState('')
+    const [discordOepn, setDiscordOpen] = useState(false);
     const [kakaoLink, setKakaoLink] = useState('')
     const [kakaoOepn, setKakaoOpen] = useState(false);
     const [githubLink, setGithubLink] = useState('')
@@ -28,9 +31,21 @@ function LinkTemplate({setLinks}) {
         }
     };
 
+
+    function onHandleKeyPressWithDiscord(e) {
+        if (e.key === 'Enter' && discordLink.length > 0 ) {
+            const type = 2;
+            const url = discordLink;
+            const newLink = {type, url};
+            setLinks([newLink, ...currnetLink]);
+            setCurrnentLink([newLink, ...currnetLink]);
+            setDiscordOpen(true);
+        }
+    };
+
     function onHandleKeyPressWithKakao(e) {
         if (e.key === 'Enter' && kakaoLink.length > 0 ) {
-            const type = 2;
+            const type = 3;
             const url = kakaoLink;
             const newLink = {type, url};
             setLinks([newLink, ...currnetLink]);
@@ -41,7 +56,7 @@ function LinkTemplate({setLinks}) {
 
     function onHandleKeyPressWithGithub(e) {
         if (e.key === 'Enter' && githubLink.length > 0) {
-            const type = 3;
+            const type = 4;
             const url = githubLink;
             const newLink = {type, url};
             setLinks([newLink, ...currnetLink]);
@@ -52,7 +67,7 @@ function LinkTemplate({setLinks}) {
 
     function onHandleKeyPressWithOther(e) {
         if (e.key === 'Enter' && oteherLink.length > 0) {
-            const type = 4;
+            const type = 5;
             const url = oteherLink;
             const newLink = {type, url};
             setLinks([newLink, ...currnetLink]);
@@ -71,22 +86,29 @@ function LinkTemplate({setLinks}) {
             </LinkUrlBox>
 
             <LinkUrlBox>
+                <Circle> <CircleImage src={discord} alt='discord' /></Circle>
+                <LinkUrlInput placeholder='링크를 입력하세요' alt='2' onKeyDown={onHandleKeyPressWithDiscord} 
+                onChange={(e) => setDiscordLink(e.target.value)} value={discordLink} disabled={discordOepn} />
+                { discordOepn && <div>✔️</div>  }
+            </LinkUrlBox>
+
+            <LinkUrlBox>
                 <Circle> <CircleImage src={kakao} alt='kakao' /></Circle>
-                <LinkUrlInput placeholder='링크를 입력하세요' alt='2' onKeyDown={onHandleKeyPressWithKakao} 
+                <LinkUrlInput placeholder='링크를 입력하세요' alt='3' onKeyDown={onHandleKeyPressWithKakao} 
                 onChange={(e) => setKakaoLink(e.target.value)} value={kakaoLink} disabled={kakaoOepn} />
                 { kakaoOepn && <div>✔️</div>  }
             </LinkUrlBox>
 
             <LinkUrlBox>
                 <Circle> <CircleImage src={github} alt='github' /></Circle>
-                <LinkUrlInput placeholder='링크를 입력하세요' alt='3' onKeyDown={onHandleKeyPressWithGithub} 
+                <LinkUrlInput placeholder='링크를 입력하세요' alt='4' onKeyDown={onHandleKeyPressWithGithub} 
                 onChange={(e) => setGithubLink(e.target.value)} value={githubLink} disabled={githubOepn} />
                 { githubOepn && <div>✔️</div>  }
             </LinkUrlBox>
 
             <LinkUrlBox>
                 <Circle> <CircleImage src={other} alt='other' /></Circle>
-                <LinkUrlInput placeholder='링크를 입력하세요' al onKeyDown={onHandleKeyPressWithOther} 
+                <LinkUrlInput placeholder='링크를 입력하세요' alt='5' onKeyDown={onHandleKeyPressWithOther} 
                 onChange={(e) => setOtherLink(e.target.value)} value={oteherLink} disabled={otherOepn} />
                 { otherOepn && <div>✔️</div>  }
             </LinkUrlBox>
@@ -116,7 +138,6 @@ const Circle = styled.div`
   height : 15px;
   border-radius: 50%;
   margin-right: 10px;
-  border: 1px solid lightgray;
 `;
 
 const CircleImage = styled.img`
