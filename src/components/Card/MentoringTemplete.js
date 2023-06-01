@@ -21,16 +21,23 @@ function MentoringTemplete() {
 
   useEffect(() => {
     onHandlerGetContents(page);
-  }, []);
-
-  useEffect(() => {
     onHandlerGetRecommandMentoring();
   }, []);
 
-  async function onHandlerGetRecommandMentoring(){
-    setAiMentoring(MENTORING_AI_MOCK);
+  function onChangeRecommandMentoring(content){
+    console.log(content);
+    setAiMentoring(content);
     setAiOpen(true);
   }
+
+  async function onHandlerGetRecommandMentoring(page) {
+    await instance.get(`/api/v1/mentoring/recommend`)
+      .then((res) => {
+        onChangeRecommandMentoring(res.data);
+      })
+      .catch((err) => { console.log(err) })
+  }
+  
 
   async function onHandlerGetContents(page) {
     await instance.get(`/api/v1/mentoring?page=${page}&size=${size}`)
@@ -73,6 +80,7 @@ function MentoringTemplete() {
             cotent={value.content}
             thumbnail={value.thumbnail}
             price={value.price}
+            rating={value.rating}
             nickname={value.userResponse.nickname}
             profileUrl={value.userResponse.profileUrl}
             handleContentClick={handleContentClick}

@@ -1,24 +1,23 @@
 import styled from "styled-components"
-import baseImage from "../../public/images/baseProfile.png"
 
 function MentoringCard(props) {
-  const {id, title, thumbnail, price, profileUrl, nickname} = props;
+  const {id, title, thumbnail, price, profileUrl, nickname, rating} = props;
   var tempPrice = 10000;
 
   return (
     <Card onClick={() => props.handleContentClick(id)}>
       <CardImage>
-        <Image src={thumbnail ? thumbnail : baseImage} alt="썸네일" />
+        <Image src={thumbnail} alt="썸네일" />
       </CardImage>
       <CardContent>
         <Title>{title} </Title>
         <SubDiv>
-            <Star>⭐ 4.8</Star>
+            <Star>⭐ {rating.toFixed(1)}</Star>
             <Price>\{price? price.toLocaleString() : tempPrice.toLocaleString()}</Price>
         </SubDiv>
       </CardContent>
       <UserInfo>
-        <UserThumbnail><CircleImage src={profileUrl ? profileUrl : baseImage}/></UserThumbnail>
+        <UserThumbnail><CircleImage src={profileUrl}/></UserThumbnail>
         <UserNickname>{nickname? nickname : '우진'}</UserNickname>
       </UserInfo>
     </Card>
